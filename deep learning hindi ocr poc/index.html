@@ -1,0 +1,75 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>POC</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body id="myCanvas">
+    <main>
+      <section>
+        <div id="image-container">
+          <img
+            id="image"
+            class="default-img"
+            src="./default-image-620x600.jpg"
+            alt="subject"
+          />
+          <canvas id="overlay-canvas"></canvas>
+        </div>
+      </section>
+      <div>
+        <input
+          type="file"
+          accept="image/*"
+          id="image-selector"
+          onchange="handleImageSelect(this)"
+        />
+        <label class="button" for="image-selector">select image</label>
+        <div class="button" for="image-selector" onclick="resetPoints()">
+          Reset Points
+        </div>
+      </div>
+    </main>
+    <aside>
+      <div>
+        <ul>
+          <p id="instruction"></p>
+        </ul>
+
+        <br />
+        <br />
+        <ul>
+          <li><span>Mouse X:</span><span id="value-mouse-x"></span></li>
+          <li><span>Mouse Y:</span><span id="value-mouse-y"></span></li>
+        </ul>
+        <br />
+        <br />
+
+        <ul>
+          <li>
+            <span>Point A:</span>
+            <span id="value-point-a-x"></span>,
+            <span id="value-point-a-y"></span>
+          </li>
+          <li>
+            <span>Point B:</span>
+            <span id="value-point-b-x"></span>,
+            <span id="value-point-b-y"></span>
+          </li>
+          <li>
+            <span>Point C:</span>
+            <span id="value-point-c-x"></span>,
+            <span id="value-point-c-y"></span>
+          </li>
+          <li>
+            <span>Point D:</span>
+            <span id="value-point-d-x"></span>,
+            <span id="value-point-d-y"></span>
+          </li>
+        </ul>
+      </div>
+    </aside>
+    <script src="./main.js"></script>
+  </body>
+</html>

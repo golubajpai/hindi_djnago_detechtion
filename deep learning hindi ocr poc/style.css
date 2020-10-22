@@ -1,0 +1,141 @@
+:root {
+    --bg-color: #121212;
+    --fg-color: #1e1e1e;
+    --box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+*, *:after, *:before {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    background: var(--bg-color);
+    margin: 0;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    color: #ffffffb0;
+    font-weight: 400;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    grid-column: 1/2;
+}
+
+main > section {
+    flex: 1;
+}
+
+main > div {
+    text-align: center;
+    /* border-top: 1px solid rgba(255, 255, 255, 0.05); */
+}
+
+main > * {
+    padding: 2rem;
+}
+
+aside {
+    grid-column: 2/3;
+    box-shadow: var(--box-shadow);
+    background: var(--fg-color);   
+    height: 100vh; 
+    position: fixed;
+    right: 0;
+    width: 25vw;
+
+}
+
+aside ul {
+    list-style: none;
+    font-size: 12px;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+aside li {
+    margin-bottom: 0.5rem;
+}
+
+aside span {
+    padding: 1rem 0.5rem;
+}
+
+#instruction {
+    padding: 1rem 0.5rem;
+    font-size: 13px;
+    letter-spacing: 1px;
+    line-height: 1.5em;
+    font-weight: 400;
+}
+
+#image-container {
+    position: relative;
+    border: 2px dashed rgba(255, 255, 255, 0.05);
+    /* width: calc(640px);
+    height: calc(480px); */
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+#overlay-canvas {
+    position: absolute;
+    width: 100%;
+    height: auto;
+}
+
+#image-container > img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+#image-container > img.default-img {
+    filter: opacity(5%);
+    width: 200px;
+    height: auto;
+}
+
+
+/*----------------| INPUT |------------------*/
+.button {
+    --transition-time: 150ms;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 999px;
+    padding: 1rem 2rem;
+    background: var(--fg-color);
+    box-shadow: var(--box-shadow);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+    transition: filter var( --transition-time) ease-in-out,
+     border var( --transition-time) ease-in-out,
+     box-shadow var( --transition-time) ease-in-out;
+     margin: 0 1rem;
+}
+
+.button:hover, :focus {
+    outline: none;
+    filter: brightness(95%);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.button:active {
+    outline: none;
+    box-shadow: none;
+    border-color: transparent;
+}
+
+input[type=file] {
+    display: none;
+}

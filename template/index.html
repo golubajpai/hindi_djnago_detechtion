@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+	</script>
+  <style type="text/css">
+    #image-container {
+      margin-top: 200px;
+    position: relative;
+    /*border: 2px dashed rgba(255, 255, 255, 0.05);
+    /* width: calc(640px);
+    height: calc(480px); */
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+#myCanvas {
+    position: absolute;
+    width: 100%;
+    height: auto;
+}
+
+#image-container > img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+#image-container > img.default-img {
+    filter: opacity(5%);
+    width: 200px;
+    height: auto;
+}
+  </style>
+	<script type="text/javascript">
+
+    
+
+				$(document).ready(function(){
+
+         function showImage(src,target) {
+  var fr=new FileReader();
+  // when image is loaded, set the src of the image where you want to display it
+  console.log('reading')
+  fr.onload = function(e) { target.src = this.result;
+
+   };
+  src.addEventListener("change",function() {
+     console.log('ok')
+     console.log('loading')
+    // fill fr with image data    
+    fr.readAsDataURL(src.files[0]);
+    var myImg = document.querySelector("#imag");
+
+  });
+}
+
+$('#imag').on('load',function(){
+    if ($(this).height()==1600 ){
+      alert('height sould be 1600')
+      document.getElementById("imag").src = null;
+    }
+    if ($(this).width()==1000 ){
+      alert('width sould be 1000')
+      document.getElementById("imag").src = null;
+    }
+
+        
+    
+});
+
+var src = document.getElementById("fileinput");
+var target = document.getElementById("imag");
+          console.log('ok')
+           showImage(src,target);
+
+
+					var token =  $('input[name="csrfToken"]').attr('value'); 
+					var base_url="http://127.0.0.1:8000/"
+					console.log('sdlfjsd f')
+		$("#button").click(function(){
+			var fd = new FormData();
+        var files = $('#fileinput').prop('files')[0];
+        console.log(files)
+        console.log(files)
+        fd.append('image',files,files.name)
+			console.log(fd.get('image'))
+
+var settings = {
+  "url": base_url+'index',
+  "method": "POST",
+  "timeout": 0,
+  "processData": false,
+  "mimeType": "multipart/form-data",
+  "contentType": false,
+  "data": fd
+};
+console.log(settings)
+$.ajax(settings).done(function (response) {
+	localStorage.removeItem("id");
+  var newres=JSON.parse(response);
+  localStorage.setItem('id',newres.data['id'])
+
+  document.getElementById("imag").src = newres.data['image'];
+});
+});
+		var i=0
+		$('.myform').on('submit', function(e){
+    // validation code here
+      e.preventDefault();
+    
+  });
+		$("#clear").on("click", function(event){
+			$('.myform').trigger("reset")
+		})
+		$("#submit").on("click",function(event){
+      if($('#spacial').is(':checked')) { 
+      var spacial=true }
+      else{
+        spacial=false
+      }
+      if($('#underline').is(':checked')) { 
+      var underline=true }
+      else{
+        underline=false
+      }
+			var fb = new FormData()
+			fb.append('first',$('#first').val())
+			fb.append('second',$('#second').val())
+			fb.append('third',$('#third').val())
+			fb.append('forth',$('#forth').val())
+			fb.append('image',localStorage.getItem('id'))
+      fb.append('underline',underline)
+      fb.append('spacial',spacial)
+
+			var settings = {
+  "url": base_url+'cordi',
+  "method": "POST",
+  "timeout": 0,
+  "processData": false,
+  "mimeType": "multipart/form-data",
+  "contentType": false,
+  "data": fb,
+  error: function (data) {
+            $('body').append('<p> unble to upload check net connection </p>')
+        }
+};
+console.log(settings)
+$.ajax(settings).done(function (response) {
+  var newres=JSON.parse(response);
+  console.log(newres)
+  $('.myform').trigger("reset")
+  i=0
+});
+			console.log('submitted')
+		})
+
+		
+		$("#myCanvas").on("click", function(event) {
+			i=i+1
+			
+        var x = event.pageX - this.offsetLeft;
+        var y = event.pageY - this.offsetTop;
+        console.log(i)
+        
+  		console.log('ok ')
+  		if (i==1){
+  			document.getElementById("first").value=`${x},${y}`
+  			console.log(i)
+  		
+  		}
+  		if (i==2){
+  			document.getElementById("second").value=`${x},${y}`
+  			
+  		}
+  		if (i==3){
+  			document.getElementById("third").value=`${x},${y}`
+
+  		}
+  		if (i==4){
+  			document.getElementById("forth").value=`${x},${y}`
+  			console.log(i)
+  			
+  		}
+
+      
+      
+
+  		
+    
+    });
+	});
+
+
+	</script>
+</head>
+<body>
+	<form class="myform" style="display: inline;">
+	first
+	<input type="text" id="first" name="first">
+	second
+	<input type="text" id="second" name="second">
+	third
+	<input type="text" id="third" name="third">
+	forth
+	<input type="text" name="forth" id="forth">
+  spacial charector
+  <input type="radio" name="spacial" id="spacial">
+  under line
+  <input type="radio" name="underline" id="underline">
+	<button  id="submit">submit </button>
+	<button id="clear"> clear</button>
+</form>
+	<div class="middle" style="text-align: center;background-color: yellow;margin-top:1%;">
+
+		<input type="file" id="fileinput" name="file">
+	
+	<button id="button" >Send Image</button>
+  </div>
+  <div id="image-container">
+ 
+	<img src="pic_trulli.jpg" id="imag" alt="Italian Trulli" style="max-width: 100%;">
+  <canvas id='myCanvas'></canvas>  
+ </div>
+  
+
+
+
+
+</body>
+</html>
